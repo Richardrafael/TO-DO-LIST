@@ -1,0 +1,24 @@
+{
+	"newTodo": "",
+	"todos": [{
+			"task": "task1",
+			"TpPriority" : "Media",
+			"date" : "10-10-2025" ,
+		  "completed" : true
+		},
+		{
+			"task": "task2",
+			"TpPriority" : "Alta",
+			"date" : "10-10-2025",
+			"completed" : true
+		},
+		{
+			"task": "task3",
+			"TpPriority" : "Alta",
+			"date" : "10-10-2025",
+			"completed" : false
+		}
+	],
+	"itemsRemovable": true,
+	"completedCount": 1
+}
