@@ -30,21 +30,24 @@ sap.ui.define([
 
 
 		onPress() {
-			const task = this.getView().getModel().getProperty("/newTask");
-			const tpPriority = this.getView().getModel().getProperty("/newTpPriority");
-			const dateDelivery = this.getView().getModel().getProperty("/dateDelivery");
-			console.log(task)
-			console.log(tpPriority)
-			console.log(dateDelivery)
+			const oModel = this.getModel();
+			const task = oModel.getProperty("/newTask");
+			const tpPriority = oModel.getProperty("/newTpPriority");
+			const dateDelivery = oModel.getProperty("/dateDelivery");
 			const aTodos = this.getTodos().map((oTodo) => Object.assign({}, oTodo));
 			aTodos.push({
-				title: this.getView().getModel().getProperty("/newTodo"),
+				task: task,
+				TpPriority: tpPriority,
+				date: dateDelivery,
 				completed: false
 			});
 
-
-			// oModel.setProperty("/todos", aTodos);
+			oModel.setProperty("/todos", aTodos);
+			oModel.setProperty("/newTask", "");
+			oModel.setProperty("/newTpPriority", "");
+			oModel.setProperty("/dateDelivery", "");
 			console.log(aTodos)
+			oModel.setProperty("/nagali", "0");
 		},
 		/**
 		 * Adds a new todo item to the bottom of the list.
@@ -114,7 +117,7 @@ sap.ui.define([
 			this.sSearchQuery = oEvent.getSource().getValue();
 			if (this.sSearchQuery && this.sSearchQuery.length > 0) {
 				oModel.setProperty("/itemsRemovable", false);
-				const filter = new Filter("title", FilterOperator.Contains, this.sSearchQuery);
+				const filter = new Filter("task", FilterOperator.Contains, this.sSearchQuery);
 				this.aSearchFilters.push(filter);
 			} else {
 				oModel.setProperty("/itemsRemovable", true);
