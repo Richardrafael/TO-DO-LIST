@@ -9,27 +9,21 @@
 				</customHeader>
 			
 				<content>
-				<Text text="Lista de Tarefas"></Text>
-
-				<Text text="Gerencie o que precisa ser feito uma UI clara e eficiente"></Text>
+					
+				
 					<f:DynamicPage>
 						<f:header>
 							<f:DynamicPageHeader pinnable="false">
-								<Input type="Text" class="todoInput" id="addtaskItemInput" value="{/newTask}" placeholder="{i18n>INPUT_PLACEHOLDER}" change=".addTodo" />
-								<Input type="Text" class="todoInput" id="typePriority" value="{/newTpPriority}" placeholder="{i18n>INPUT_PLACEHOLDER_PRIORITY}" change=".addTodo" />
-								<Input type="Date"  class="todoInput" id="dateDelivery" value="{/dateDelivery}" placeholder="{i18n>INPUT_PLACEHOLDER}" change=".addTodo" />
-								<Button text="Adicionar"
-								 icon="sap-icon://add"
-				press=".onPress"
-				type="Emphasized"
-				class="sapUiSmallMargin">
-				</Button>
+							
+								
 							</f:DynamicPageHeader>
 						</f:header>
 						<f:content>
-	
 						
-
+					
+<Panel width="auto" class="">
+	<Text text="Lista de Tarefas"></Text>
+				<Text text="Gerencie o que precisa ser feito uma UI clara e eficiente"></Text>
 							<List id="todoList"
 								items="{ path: '/todos', events: { change: '.onUpdateItemsLeftCount' } }"
 								mode="None"
@@ -40,15 +34,41 @@
 								<headerToolbar>
 									<OverflowToolbar id="toolbar" class="sapUiSizeCompact" visible="{= !${view>/isMobile} }">
 										<ToolbarSpacer />
-										<SearchField id="searchTodoItemsInput" placeholder="{i18n>TESTE}" liveChange=".onSearch" width="20rem"/>
-										<SegmentedButton selectedKey="all" selectionChange=".onFilter" class="sapMSegmentedButtonNoAutoWidth">
+									<VBox	alignItems="Center" width="100%"		direction="Column" >
+									<FlexBox 
+									alignItems="Center"
+									justifyContent="SpaceBetween"
+									width="100%"
+									direction="Row" 
+									>
+							<Input type="Text"  id="addtaskItemInput" value="{/newTask}" placeholder="{i18n>INPUT_PLACEHOLDER}"/>
+								<Select
+									forceSelection="false"
+									selectedKey="{/newTpPriority}"
+									items="{
+										path: '/ProductCollection',
+										sorter: { path: 'Name' }
+									}">
+									<core:Item key="{cDtypePriority}" text="{Name}" />
+								</Select>
+								<Input type="Date" id="dateDelivery" value="{/dateDelivery}" placeholder="{i18n>INPUT_PLACEHOLDER}"/>
+								<Button text="Adicionar"
+								 icon="sap-icon://add"
+								 press=".onPress"
+								 type="Emphasized"
+								 >
+								</Button>
+									</FlexBox>
+									<SegmentedButton selectedKey="all" selectionChange=".onFilter" class="sapMSegmentedButtonNoAutoWidth">
 											<items>
 												<SegmentedButtonItem text="{i18n>LABEL_ALL}" key="all"/>
 												<SegmentedButtonItem text="{i18n>LABEL_ACTIVE}" key="active"/>
 												<SegmentedButtonItem text="{i18n>LABEL_COMPLETED}" key="completed"/>
 											</items>
 										</SegmentedButton>
-										<Button id="clearCompleted" enabled="{/itemsRemovable}" icon="sap-icon://delete" text="{i18n>CLEAR_COMPLETED}" press=".onClearCompleted"/>
+										<!-- <Button id="clearCompleted" enabled="{/itemsRemovable}" icon="sap-icon://delete" text="{i18n>CLEAR_COMPLETED}" press=".onClearCompleted"/> -->
+			      	</VBox>
+										
 									</OverflowToolbar>
 								</headerToolbar>
 								<infoToolbar>
@@ -62,8 +82,9 @@
 								<CustomListItem>
 									<HBox>
 										<CheckBox selected="{completed}"  />
-										<VBox justifyContent="Center" height="3rem">
+										<VBox  width="auto"  justifyContent="Center" direction="Row" height="3rem">
 											<Text text="{task}"/>
+											<Text text="{TpPriority}"/>
 											<Text text="{date}"/>
 										</VBox>
 									</HBox>
@@ -72,12 +93,12 @@
 									</customData>
 								</CustomListItem>
 							</List>
-
+</Panel>
 						</f:content>
 					</f:DynamicPage>
 				</content>
 
-				<footer>
+				<!-- <footer>
 					<OverflowToolbar id="toolbar-footer" visible="{= !!${view>/isMobile} }">
 						<SegmentedButton selectedKey="all" selectionChange=".onFilter" class="sapMSegmentedButtonNoAutoWidth">
 							<items>
@@ -89,7 +110,7 @@
 						<ToolbarSpacer />
 						<Button id="clearCompleted-footer" enabled="{/itemsRemovable}" icon="sap-icon://delete" text="{i18n>CLEAR_COMPLETED}" press=".onClearCompleted"/>
 					</OverflowToolbar>
-				</footer>
+				</footer> -->
 
 			</Page>
 		</App>

@@ -2,19 +2,19 @@
 	"newTodo": "",
 	"todos": [{
 			"task": "task1",
-			"TpPriority" : "Media",
+			"TpPriority" : "M",
 			"date" : "10-10-2025" ,
 		  "completed" : true
 		},
 		{
 			"task": "task2",
-			"TpPriority" : "Alta",
+			"TpPriority" : "A",
 			"date" : "10-10-2025",
 			"completed" : true
 		},
 		{
 			"task": "task3",
-			"TpPriority" : "Alta",
+			"TpPriority" : "A",
 			"date" : "10-10-2025",
 			"completed" : false
 		}

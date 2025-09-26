@@ -13,22 +13,33 @@ sap.ui.define([
 		onInit() {
 			this.aSearchFilters = [];
 			this.aTabFilters = [];
+			// this.getView().setModel(new JSONModel({
 
-			this.getView().setModel(new JSONModel({
-				isMobile: Device.browser.mobile
-			}), "view");
+			// }), "view");
+
+			const oData = {
+				"ProductCollection": [
+					{
+						"cDtypePriority": "M",
+						"Name": "Média"
+					},
+					{
+						"cDtypePriority": "A",
+						"Name": "Alta"
+					},
+					{
+						"cDtypePriority": "B",
+						"Name": "Baixa"
+					}
+				]
+			}
+			const oModel = new JSONModel(oData);
+			this.getView().setModel(oModel, 'view');
+
 		},
-
-		/**
-		 * Get the default model from the view
-		 *
-		 * @returns {sap.ui.model.json.JSONModel} The model containing the todo list, etc.
-		 */
 		getModel() {
 			return this.getView().getModel();
 		},
-
-
 		onPress() {
 			const oModel = this.getModel();
 			const task = oModel.getProperty("/newTask");
@@ -49,32 +60,11 @@ sap.ui.define([
 			console.log(aTodos)
 			oModel.setProperty("/nagali", "0");
 		},
-		/**
-		 * Adds a new todo item to the bottom of the list.
-		 */
-		// addTodo() {
-		// 	const oModel = this.getModel();
-		// 	const aTodos = this.getTodos().map((oTodo) => Object.assign({}, oTodo));
-
-		// 	aTodos.push({
-		// 		title: oModel.getProperty("/newTodo"),
-		// 		completed: false
-		// 	});
-
-		// 	oModel.setProperty("/todos", aTodos);
-		// 	oModel.setProperty("/newTodo", "");
-		// },
-
-		/**
-		 * Trigger removal of all completed items from the todo list.
-		 */
 		onClearCompleted() {
 			const aTodos = this.getTodos().map((oTodo) => Object.assign({}, oTodo));
 			this.removeCompletedTodos(aTodos);
 			this.getModel().setProperty("/todos", aTodos);
 		},
-
-
 		removeCompletedTodos(aTodos) {
 			let i = aTodos.length;
 			while (i--) {
@@ -84,36 +74,17 @@ sap.ui.define([
 				}
 			}
 		},
-
-		/**
-		 * Determines the todo list
-		 *
-		 * @returns {object[]} The todo list
-		 */
 		getTodos() {
 			const oModel = this.getModel();
 			return oModel && oModel.getProperty("/todos") || [];
 		},
-
-		/**
-		 * Updates the number of items not yet completed
-		 */
 		onUpdateItemsLeftCount() {
 			const iItemsLeft = this.getTodos().filter((oTodo) => oTodo.completed !== true).length;
 			this.getModel().setProperty("/itemsLeftCount", iItemsLeft);
 		},
-
-		/**
-		 * Trigger search for specific items. The removal of items is disable as long as the search is used.
-		 * @param {sap.ui.base.Event} oEvent Input changed event
-		 */
 		onSearch(oEvent) {
 			const oModel = this.getModel();
-
-			// First reset current filters
 			this.aSearchFilters = [];
-
-			// add filter for search
 			this.sSearchQuery = oEvent.getSource().getValue();
 			if (this.sSearchQuery && this.sSearchQuery.length > 0) {
 				oModel.setProperty("/itemsRemovable", false);
@@ -122,17 +93,12 @@ sap.ui.define([
 			} else {
 				oModel.setProperty("/itemsRemovable", true);
 			}
-
 			this._applyListFilters();
 		},
 
 		onFilter(oEvent) {
-			// First reset current filters
 			this.aTabFilters = [];
-
-			// add filter for search
 			this.sFilterKey = oEvent.getParameter("item").getKey();
-
 			switch (this.sFilterKey) {
 				case "active":
 					this.aTabFilters.push(new Filter("completed", FilterOperator.EQ, false));
@@ -142,9 +108,7 @@ sap.ui.define([
 					break;
 				case "all":
 				default:
-				// Don't use any filter
 			}
-
 			this._applyListFilters();
 		},
 
@@ -180,3 +144,4 @@ sap.ui.define([
 	});
 
 });
+
