@@ -17,8 +17,9 @@
 							<f:DynamicPageHeader pinnable="false">
 								<Input type="Text" class="todoInput" id="addtaskItemInput" value="{/newTask}" placeholder="{i18n>INPUT_PLACEHOLDER}" change=".addTodo" />
 								<Input type="Text" class="todoInput" id="typePriority" value="{/newTpPriority}" placeholder="{i18n>INPUT_PLACEHOLDER_PRIORITY}" change=".addTodo" />
-								<Input type="Date" class="todoInput" id="dateDelivery" value="{/dateDelivery}" placeholder="{i18n>INPUT_PLACEHOLDER}" change=".addTodo" />
+								<Input type="Date"  class="todoInput" id="dateDelivery" value="{/dateDelivery}" placeholder="{i18n>INPUT_PLACEHOLDER}" change=".addTodo" />
 								<Button text="Adicionar"
+								 icon="sap-icon://add"
 				press=".onPress"
 				type="Emphasized"
 				class="sapUiSmallMargin">
@@ -39,7 +40,7 @@
 								<headerToolbar>
 									<OverflowToolbar id="toolbar" class="sapUiSizeCompact" visible="{= !${view>/isMobile} }">
 										<ToolbarSpacer />
-										<SearchField id="searchTodoItemsInput" liveChange=".onSearch" width="20rem"/>
+										<SearchField id="searchTodoItemsInput" placeholder="{i18n>TESTE}" liveChange=".onSearch" width="20rem"/>
 										<SegmentedButton selectedKey="all" selectionChange=".onFilter" class="sapMSegmentedButtonNoAutoWidth">
 											<items>
 												<SegmentedButtonItem text="{i18n>LABEL_ALL}" key="all"/>
@@ -61,7 +62,7 @@
 								<CustomListItem>
 									<HBox>
 										<CheckBox selected="{completed}"  />
-										<VBox justifyContent="Center" columnGap="1rem"  height="3rem">
+										<VBox justifyContent="Center" height="3rem">
 											<Text text="{task}"/>
 											<Text text="{date}"/>
 										</VBox>
