@@ -1,0 +1,8 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.f">
+  <Text text="Alta" class="tpPriorityBoxA tpPriority" visible="{= ${TpPriority} === 'A' }" />
+	<Text text="Média" class="tpPriorityBoxM tpPriority" visible="{= ${TpPriority} === 'M' }" />
+	<Text text="Baixa" class="tpPriorityBoxB tpPriority" visible="{= ${TpPriority} === 'B' }" />
+  </core:FragmentDefinition>
