@@ -13,29 +13,8 @@ sap.ui.define([
 		onInit() {
 			this.aSearchFilters = [];
 			this.aTabFilters = [];
-			// this.getView().setModel(new JSONModel({
-
-			// }), "view");
-
-			const oData = {
-				"ProductCollection": [
-					{
-						"cDtypePriority": "M",
-						"Name": "Média"
-					},
-					{
-						"cDtypePriority": "A",
-						"Name": "Alta"
-					},
-					{
-						"cDtypePriority": "B",
-						"Name": "Baixa"
-					}
-				]
-			}
-			const oModel = new JSONModel(oData);
+			const oModel = new JSONModel();
 			this.getView().setModel(oModel, 'view');
-
 		},
 		getModel() {
 			return this.getView().getModel();
@@ -46,13 +25,13 @@ sap.ui.define([
 			const tpPriority = oModel.getProperty("/newTpPriority");
 			const dateDelivery = oModel.getProperty("/dateDelivery");
 			const aTodos = this.getTodos().map((oTodo) => Object.assign({}, oTodo));
+			console.log(tpPriority)
 			aTodos.push({
 				task: task,
 				TpPriority: tpPriority,
 				date: dateDelivery,
 				completed: false
 			});
-
 			oModel.setProperty("/todos", aTodos);
 			oModel.setProperty("/newTask", "");
 			oModel.setProperty("/newTpPriority", "");

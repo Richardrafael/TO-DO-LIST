@@ -2,13 +2,13 @@
 	"newTodo": "",
 	"todos": [{
 			"task": "task1",
-			"TpPriority" : "M",
+			"TpPriority" : "B",
 			"date" : "10-10-2025" ,
 		  "completed" : true
 		},
 		{
 			"task": "task2",
-			"TpPriority" : "A",
+			"TpPriority" : "M",
 			"date" : "10-10-2025",
 			"completed" : true
 		},
@@ -19,6 +19,28 @@
 			"completed" : false
 		}
 	],
+
 	"itemsRemovable": true,
-	"completedCount": 1
+	"completedCount": 1,
+	"aCardData":  [{
+					"title": "Tarefas atrasadas",
+					"number": "0",
+					"subtitle": "Contagem baseada no prazo e status.",
+					"icon": "sap-icon://alert",
+					"iconColor": "Critical" 
+				},
+				{
+					"title": "Para hoje",
+					"number": "0",
+					"subtitle": "Tarefas com prazo hoje (abertas).",
+					"icon": "sap-icon://calendar",
+					"iconColor": "Default"
+				},
+				{
+					"title": "Amanhã (D+1)",
+					"number": "0",
+					"subtitle": "Tarefas com prazo amanhã (abertas).",
+					"icon": "sap-icon://date-time",
+					"iconColor": "Default"
+				}]
 }

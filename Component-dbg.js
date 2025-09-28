@@ -6,4 +6,5 @@ sap.ui.define(["sap/ui/core/UIComponent", "sap/ui/core/ComponentSupport"], (UICo
 			interfaces: ["sap.ui.core.IAsyncContentCreation"],
 		}
 	});
+
 });
