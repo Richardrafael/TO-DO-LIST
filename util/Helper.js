@@ -1,2 +1,2 @@
-sap.ui.define(["require"],e=>{"use strict";return{resolvePath(r){return e.toUrl("../")+r}}});
+sap.ui.define(["require"],r=>{"use strict";return{formatPriorityClass(r){switch(r){case"A":return"tpPriorityBoxA";case"M":return"tpPriorityBoxM";case"B":return"tpPriorityBoxB";default:return"tpPriorityBoxB"}},resolvePath(t){return r.toUrl("../")+t}}});
 //# sourceMappingURL=Helper.js.map

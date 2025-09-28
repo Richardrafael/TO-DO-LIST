@@ -1,0 +1,61 @@
+
+html, body {
+    overflow: hidden; 
+    height: 100%; 
+}
+
+.sapUiBody {
+    height: 100%;
+}
+li[data-todo-item-completed="true"] .sapMHBox {
+	text-decoration: line-through;
+}
+
+.lisText{
+  font-size: 1rem !important;
+   max-width: 20rem; /* Adjust as needed */                                                
+    white-space: nowrap;                                                                    
+    overflow: hidden;                                                                       
+    text-overflow: ellipsis;                                                                
+    display: inline-block;                                                                  
+    vertical-align: middle;
+}
+
+.tpPriority{
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 2rem; /* arredondado estilo pill */
+  text-align: center;
+  min-width: 3rem;
+}
+.tpPriorityBoxA{
+   color: #842029; /* texto vermelho escuro */
+  background-color: #f8d7da; /* vermelho clarinho */
+  border: 1px solid #f5c2c7;
+}
+.tpPriorityBoxM{
+  color: #664d03; /* texto marrom */
+  background-color: #fff3cd; /* amarelo clarinho */
+  border: 1px solid #ffe69c;
+}
+.tpPriorityBoxB{
+  color: #0f5132; /* texto verde escuro */
+  background-color: #d1e7dd; /* verde clarinho */
+  border: 1px solid #badbcc;
+}
+
+
+.listTask{
+  border-radius: 0.7rem;
+  padding: 1rem !important;
+  background-color: #fff !important;
+  border: 1px solid #d1d1d1 !important ;
+}
+
+.border-panel {
+  border: 1px solid #d1d1d1 !important ;
+  width: 100%; 
+}

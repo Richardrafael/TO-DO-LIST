@@ -1,150 +1,151 @@
 <mvc:View
-	controllerName="sap.ui.demo.todo.controller.App"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core"
-	xmlns="sap.m"
-	xmlns:f="sap.f"
-	xmlns:l="sap.ui.layout"
-	displayBlock="true">
-	<App>
-		<Page showHeader="false" backgroundDesign="Solid">
-			<content>
-				<VBox class="sapUiSmallMargin">
+controllerName="sap.ui.demo.todo.controller.App"
+xmlns:mvc="sap.ui.core.mvc"
+xmlns:core="sap.ui.core"
+xmlns="sap.m"
+xmlns:f="sap.f"
+xmlns:l="sap.ui.layout"
+xmlns:form="sap.ui.layout.form"
+displayBlock="true">
+ 
+ <App autoFocus="false">
+    <Page 
+   showHeader="true" 
+   backgroundDesign="Solid" 
+   enableScrolling="true"   
+   class="sapUiContentPadding">
+   
+<customHeader>
+					<f:ShellBar core:require="{ Helper: 'sap/ui/demo/todo/util/Helper' }" 
+					title="{i18n>TITLE}"
+					 homeIcon="{:= Helper.resolvePath('./img/logo.png') }" />
+				</customHeader>
 
-					<FlexBox
-						items="{path: '/aCardData'}"
-						justifyContent="Center"
-						alignItems="Center"
-						wrap="Wrap"
-						class="sapUiTinyMarginBottom">
-						<items>
-							<core:Fragment
-								fragmentName="sap.ui.demo.todo.view.fragment.InfoCard"
-								type="XML"/>
-						</items>
-					</FlexBox>
-<VBox  width="100%" class="sapUiSmallMargin">
-					<Title text="Suas tarefas" level="H2" titleStyle="H3" class="sapUiMediumMarginTop" />
-					<Text text="Gerencie o que precisa ser feito usando uma UI clara e eficiente." />
-</VBox>
-					
-					<f:Card class="sapUiSmallMarginEnd sapUiTinyMarginBottom"  width="100%">
-		<f:content >
-			<VBox  width="100%" class="sapUiSmallMargin">
-				<HBox>
-					<core:Icon src="sap-icon://circle-task" color="blue"  class="sapUiTinyMarginEnd"/>
-					<Title text="Lista de Tarefas" />
-				</HBox>
-				<!-- </headerToolbar> -->
-				<!-- <content> -->
-				<VBox width="100%" >
-					                    <FlexBox
-											alignItems="Center"
-											justifyContent="SpaceBetween"
-											class="sapUiSmallMarginBottom">
-											<Input
-												id="addtaskItemInput"
-												 class="roundedInput"
-												placeholder="O que precisa ser feito?"
-												value="{/newTask}">
-												<layoutData>
-													<FlexItemData growFactor="6" /> </layoutData>
-											</Input>
-											<ToolbarSpacer width="1rem" />
-											<Select
-												selectedKey="{/newTpPriority}"
-												class="roundedInput">
-												<core:Item key="" text="Selecione" />
-												<core:Item key="B" text="Baixa" />
-												<core:Item key="M" text="Média" />
-												<core:Item key="A" text="Alta" />
-							
-											</Select>
-											<ToolbarSpacer width="1rem" />
-											<DatePicker
-												id="dateDelivery"
-												class="roundedInput"
-												placeholder="dd/mm/aaaa"
-												value="{/dateDelivery}"
-												>
-												<layoutData>
-													<FlexItemData growFactor="2" />
-												</layoutData>
-											</DatePicker>
-											<ToolbarSpacer width="1rem" />
-											<Button
-												text="Adicionar"
-												icon="sap-icon://add"
-												press=".onPress"
-												type="Emphasized">
-												<layoutData>
-													<FlexItemData growFactor="1" />
-												</layoutData>
-											</Button>
-										</FlexBox>
-					<SegmentedButton selectedKey="all" selectionChange=".onFilter" class="sapUiSmallMarginBottom">
-						<items>
-							<SegmentedButtonItem text="Todos 1" key="all"/>
-							<SegmentedButtonItem text="Abertos 0" key="active"/>
-							<SegmentedButtonItem text="Concluídos 0" key="completed"/>
-						</items>
-					</SegmentedButton>
+   <content>
+    
+        <VBox width="100%"> 
+     
+          		<FlexBox
+          			justifyContent="Center"
+          			alignItems="Center"
+          			wrap="Wrap"
+          			class="sapUiTinyMarginTopBottom">
+          			<items>
+          				<core:Fragment fragmentName="sap.ui.demo.todo.view.fragment.InfoCard" type="XML" binding="{view>/cardData/overdue}"/>
+          				<core:Fragment fragmentName="sap.ui.demo.todo.view.fragment.InfoCard" type="XML" binding="{view>/cardData/today}"/>
+          				<core:Fragment fragmentName="sap.ui.demo.todo.view.fragment.InfoCard" type="XML" binding="{view>/cardData/tomorrow}"/>
+          			</items>
+          		</FlexBox>     
+          <VBox width="100%">
+      <Title text="Suas tarefas" level="H2" titleStyle="H3" class="sapUiMediumMarginTop" />
+      <Text text="Gerencie o que precisa ser feito usando uma UI clara e eficiente." />
+     </VBox>
+     
+          <FlexBox  
+      class="listTask sapUiMediumMarginTopBottom" 
+      direction="Column"
+      width="100%">
+      
+      <HBox class="sapUiTinyMarginBottom">    
+              <core:Icon src="sap-icon://circle-task" color="blue" class="sapUiTinyMarginEnd"/>
+       <Title text="Lista de Tarefas" />
+      </HBox>
+      
+            <FlexBox
+       alignItems="Center"
+       justifyContent="SpaceBetween"
+       class="sapUiTinyMarginBottom">
+       
+       <Input
+        id="addtaskItemInput"
+        class="roundedInput"
+        maxLength="200"
+        placeholder="O que precisa ser feito?"
+        value="{/newTask}">
+        <layoutData>
+         <FlexItemData growFactor="6" />
+        </layoutData>
+       </Input>
+       
+       <Select
+        selectedKey="{/newTpPriority}"
+        class="roundedInput sapUiSmallMarginBeginEnd">         <core:Item key="" text="Selecione" />
+        <core:Item key="B" text="Baixa" />
+        <core:Item key="M" text="Média" />
+        <core:Item key="A" text="Alta" />
+       </Select>
+       
+       <DatePicker
+        id="dateDelivery"
+        class="roundedInput sapUiSmallMarginEnd" placeholder="dd/mm/aaaa"
+        value="{/dateDelivery}">
+        <layoutData>
+         <FlexItemData growFactor="2" />
+        </layoutData>
+       </DatePicker>
+       
+       <Button
+        text="Adicionar"
+        icon="sap-icon://add"
+        press=".onPress"
+        type="Emphasized">
+        <layoutData>
+         <FlexItemData growFactor="1" />
+        </layoutData>
+       </Button>
+      </FlexBox>
+      
+      <SegmentedButton selectedKey="all" selectionChange=".onFilter" class="sapUiTinyMarginBottom">        <items>
+        <SegmentedButtonItem width="10rem" text="Todos " key="all" id="all"/>
+        <SegmentedButtonItem width="10rem" text="Abertos " key="active" id="active"/>
+        <SegmentedButtonItem width="10rem" text="Concluídos " key="completed" id="completed" />
+       </items>
+      </SegmentedButton>
 
-				<List
-    id="todoList"
-    items="{/todos}"
-    showSeparators="None"
-		width="100%"
-    noDataText="Nenhuma tarefa encontrada.">
-
-    <CustomListItem>
-        <!-- VBox externo centralizando todo conteúdo -->
-        <VBox
-            width="100%"
-            alignItems="Center"
-            justifyContent="Center">
-
-            <!-- Card que ocupa 90% da largura -->
-            <f:Card class="sapUiSmallMarginBegin sapUiSmallMarginEnd sapUiTinyMarginBottom" width="auto">
-                <f:content>
-
-                    <!-- FlexBox interno = display:flex -->
-                    <FlexBox
-                        width="100%"
-                        alignItems="Center"
-                        justifyContent="SpaceBetween"
-                        class="sapUiSmallMarginBegin sapUiSmallMarginEnd">
-
-                        <CheckBox selected="{completed}" class="sapUiSmallMarginEnd" />
-
-                        <Text text="{task}" class="sapUiSmallMarginEnd" />
-
-                        <GenericTag
-                            design="StatusIconHidden"
-                            class="sapUiSmallMarginBottom"
-                            text="{= ${TpPriority} === 'A' ? 'Alta' : (${TpPriority} === 'M' ? 'Média' : 'Baixa') }"
-                            status="{= ${TpPriority} === 'A' ? 'Error' : (${TpPriority} === 'M' ? 'Warning' : 'Success') }" />
-
-                        <ToolbarSpacer />
-
-                        <Text text="{date}" class="sapUiSmallMarginBeginEnd" />
-
-                        <Button icon="sap-icon://delete" type="Transparent" press=".onDeleteItem" />
-
-                    </FlexBox>
-                </f:content>
-            </f:Card>
-        </VBox>
-    </CustomListItem>
-
-</List>
-				</VBox>
-			</VBox>
-		</f:content>
-	</f:Card>	
-
-				</VBox>
-			</content>
-		</Page>
-	</App>
+            <List
+       id="todoList"
+       items="{/todos}"
+       showSeparators="None"
+       mode="None"
+       noDataText="Nenhuma tarefa encontrada.">
+       
+       <CustomListItem type="Inactive" class="noFocusItem" >
+                <HBox 
+         alignItems="Center" 
+         justifyContent="SpaceBetween" 
+         class="sapUiSmallPaddingBeginEnd sapUiSmallMarginTopBottom">
+         
+         <HBox alignItems="Center">
+          <CheckBox selected="{completed}" class="sapUiTinyMarginEnd"/>
+          <Text text="{task}" class="sapUiTinyMarginEnd lisText" wrapping="true"/>
+          <core:Fragment
+           fragmentName="sap.ui.demo.todo.view.fragment.TpPriority"
+           type="XML"/>
+         </HBox>
+         <HBox alignItems="Center">
+          <core:Icon
+           src="sap-icon://calendar"
+           class="sapUiTinyMarginEnd"
+           size="1.5rem"
+           color="{iconColor}" />
+         <Text 
+         text="{
+         path: 'date',
+        formatter: '.formatDate'
+        }"
+         wrapping="false"
+        class="sapUiSmallMarginBeginEnd lisText" />
+          <Button icon="sap-icon://delete" 
+          type="Transparent" press=".onDeleteItem"/>
+           <Button icon="sap-icon://message-information" 
+          type="Transparent" press=".onInfoItem"/>
+         </HBox>
+        </HBox>
+       </CustomListItem>
+      </List>
+     </FlexBox> 
+    </VBox>
+   </content>
+  </Page>
+ </App>
 </mvc:View>
