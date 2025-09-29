@@ -6,8 +6,10 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/base/strings/formatMessage",
 	"sap/ui/demo/todo/util/Helper",
-	"sap/m/MessageToast"
-], (Device, Controller, Filter, FilterOperator, JSONModel, formatMessage, Helper, MessageToast) => {
+	"sap/m/MessageToast",
+	"sap/m/Dialog",
+	"sap/ui/layout/form/SimpleForm"
+], (Device, Controller, Filter, FilterOperator, JSONModel, formatMessage, Helper, MessageToast, Dialog, SimpleForm) => {
 	"use strict"
 
 	return Controller.extend("sap.ui.demo.todo.controller.App", {
@@ -16,6 +18,7 @@ sap.ui.define([
 			this.formatter = Helper;
 			this.aSearchFilters = [];
 			this.aTabFilters = [];
+			Device.resize.attachHandler(this._onDeviceResize, this);
 			const oModel = new JSONModel();
 			this.getView().setModel(oModel, 'view');
 
@@ -33,7 +36,55 @@ sap.ui.define([
 				}
 			}
 		},
+		onDeleteItem(oEvent) {
+			const oContext = oEvent.getSource().getBindingContext();
+			const sPath = oContext.getPath();
+			const iIndex = parseInt(sPath.split("/").pop(), 10);
+			if (!this._oConfirmDialog) {
+				this._oConfirmDialog = new sap.m.Dialog({
+					title: "Confirmação",
+					type: "Message",
+					content: new sap.m.Text({
+						text: "Tem certeza que deseja excluir esta tarefa?"
+					}),
+					beginButton: new sap.m.Button({
+						text: "Sim",
+						type: "Emphasized",
+						press: function () {
+							this._deleteTask(iIndex); // Exclui tarefa
+							this._oConfirmDialog.close();
+						}.bind(this)
+					}),
+					endButton: new sap.m.Button({
+						text: "Não",
+						press: function () {
+							this._oConfirmDialog.close();
+						}.bind(this)
+					}),
+					afterClose: function () {
+					}.bind(this)
+				});
+				this.getView().addDependent(this._oConfirmDialog);
+			} else {
+				this._oConfirmDialog.getBeginButton().detachPress();
+				this._oConfirmDialog.getBeginButton().attachPress(function () {
+					this._deleteTask(iIndex);
+					this._oConfirmDialog.close();
+				}.bind(this));
+			}
 
+			this._oConfirmDialog.open();
+		},
+
+		_deleteTask: function (iIndex) {
+			const oModel = this.getModel();
+			const aTodos = oModel.getProperty("/todos");
+			aTodos.splice(iIndex, 1);
+			oModel.setProperty("/todos", aTodos);
+
+			// Atualiza contadores
+			this._updateCardData();
+		},
 		_updateCardData() {
 			const oModel = this.getOwnerComponent().getModel();
 			const aTodos = oModel.getProperty("/todos") || [];
@@ -143,15 +194,6 @@ sap.ui.define([
 			this.getModel().setProperty("/todos", aTodos);
 			this._updateCardData();
 		},
-		// removeCompletedTodos(aTodos) {
-		// 	let i = aTodos.length;
-		// 	while (i--) {
-		// 		const oTodo = aTodos[i];
-		// 		if (oTodo.completed) {
-		// 			aTodos.splice(i, 1);
-		// 		}
-		// 	}
-		// },
 		getTodos() {
 			const oModel = this.getModel();
 			return oModel && oModel.getProperty("/todos") || [];
@@ -159,17 +201,6 @@ sap.ui.define([
 		onUpdateItemsLeftCount() {
 			const iItemsLeft = this.getTodos().filter((oTodo) => oTodo.completed !== true).length;
 			this.getModel().setProperty("/itemsLeftCount", iItemsLeft);
-			this._updateCardData();
-		},
-		onDeleteItem(oEvent) {
-			const oModel = this.getModel();
-			const aTodos = oModel.getProperty("/todos");
-			const sPath = oEvent.getSource().getBindingContext().getPath();
-			const iIndex = parseInt(sPath.split("/").pop(), 10);
-
-			aTodos.splice(iIndex, 1);
-			oModel.setProperty("/todos", aTodos);
-
 			this._updateCardData();
 		},
 		onSearch(oEvent) {
@@ -221,17 +252,43 @@ sap.ui.define([
 				});
 			}
 		},
-
-		getI18NKey(sFilterKey, sSearchQuery) {
-			if (!sFilterKey || sFilterKey === "all") {
-				return sSearchQuery ? "ITEMS_CONTAINING" : undefined;
-			} else if (sFilterKey === "active") {
-				return "ACTIVE_ITEMS" + (sSearchQuery ? "_CONTAINING" : "");
-			} else {
-				return "COMPLETED_ITEMS" + (sSearchQuery ? "_CONTAINING" : "");
+		onInfoItem(oEvent) {
+			const oContext = oEvent.getSource().getBindingContext();
+			if (!this._oInfoDialog) {
+				this._oInfoDialog = new Dialog({
+					title: "Detalhes da Tarefa",
+					contentWidth: "400px",
+					contentHeight: "auto",
+					resizable: true,
+					content: [
+						new SimpleForm({
+							editable: false,
+							layout: "ResponsiveGridLayout",
+							content: [
+								new sap.m.Label({ text: "Tarefa" }),
+								new sap.m.Text({ text: "{task}" }),
+								new sap.m.Label({ text: "Prioridade" }),
+								new sap.m.Text({ text: "{TpPriority}" }),
+								new sap.m.Label({ text: "Data" }),
+								new sap.m.Text({ text: "{path: 'date', formatter: '.formatDate'}" }),
+								new sap.m.Label({ text: "Concluída" }),
+								new sap.m.CheckBox({ selected: "{completed}", editable: false })
+							]
+						})
+					],
+					beginButton: new sap.m.Button({
+						text: "Fechar",
+						press: function () {
+							this._oInfoDialog.close();
+						}.bind(this)
+					})
+				});
+				this.getView().addDependent(this._oInfoDialog);
 			}
+
+			this._oInfoDialog.setBindingContext(oContext);
+			this._oInfoDialog.open();
 		}
 	});
-
 });
 

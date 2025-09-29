@@ -2,7 +2,7 @@
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core"
 	xmlns:f="sap.f">
-	<Panel class="sapUiSmallMarginEnd border-panel sapUiTinyMarginBottom" width="300px">
+	<Panel class="sapUiSmallMarginEnd border-panel sapUiTinyMarginBottom" width="300px" height="170px">
 			<HBox class="sapUiSmallMargin">
 				<core:Icon
 					src="{view>icon}"
