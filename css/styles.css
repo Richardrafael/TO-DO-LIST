@@ -11,9 +11,10 @@ li[data-todo-item-completed="true"] .sapMHBox {
 	text-decoration: line-through;
 }
 
+
 .lisText{
   font-size: 1rem !important;
-   max-width: 20rem; /* Adjust as needed */                                                
+   max-width: 5rem; /* Adjust as needed */                                                
     white-space: nowrap;                                                                    
     overflow: hidden;                                                                       
     text-overflow: ellipsis;                                                                
@@ -58,4 +59,45 @@ li[data-todo-item-completed="true"] .sapMHBox {
 .border-panel {
   border: 1px solid #d1d1d1 !important ;
   width: 100%; 
+}
+
+
+.line {
+ border: 1px solid #d1d1d1 !important ;
+}
+
+.responsiveFlex {
+  display: flex; /* garante que o FlexBox tenha display flex */
+  flex-direction: column; /* reforço */
+}
+  .containerForm{
+  flex-direction: column !important;
+}
+  .segmentedResponsive {
+    display: none !important;
+  }
+  .selectResponsive {
+    display: flex !important;
+    width: 100%; /* faz ocupar toda a largura no mobile */
+  }
+
+/* Desktop: row */
+@media (min-width: 768px) {
+  .responsiveFlex {
+    flex-direction: row !important; /* muda para linha */
+  }
+
+  .segmentedResponsive {
+  display: flex !important;
+}
+.selectResponsive {
+  display: none !important;
+}
+
+  .lisText{
+    max-width: 20rem;
+  }
+  .containerForm{
+  flex-direction: row !important;
+}
 }
