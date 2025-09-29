@@ -219,7 +219,7 @@ sap.ui.define([
 
 		onFilter(oEvent) {
 			this.aTabFilters = [];
-			this.sFilterKey = oEvent.getParameter("item").getKey();
+			this.sFilterKey = oEvent.getSource().getSelectedKey();
 			switch (this.sFilterKey) {
 				case "active":
 					this.aTabFilters.push(new Filter("completed", FilterOperator.EQ, false));
